@@ -3,13 +3,19 @@ services:
   dev:
     build: ./dev
     volumes: 
-      - war_volume:/target/hello-1.0.war
+      - type: volume
+        source: war_volume
+        target: /boxfuse-sample-java-war-hello/
+      
   prod:
     image: tomcat:8-alpine
     ports: 
       - "8082:8080"
     volumes:
-      - war_volume:/usr/local/tomcat/webapps/
-    volumes:
-      war_volume:
+      - type: volume
+        source: war_volume
+        target: /usr/local/tomcat/webapps
+      
+volumes:
+  war_volume:
 
