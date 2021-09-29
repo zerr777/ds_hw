@@ -1,0 +1,19 @@
+version: '3'
+volumes:
+  war_volume: {}
+services:
+  dev:
+    build: .dev
+    volumes: 
+      - type: volume
+        source: war_volume
+        target: /target/
+      
+  prod:
+    image: tomcat:8-alpine
+    ports: 
+      - "8082:8080"
+    volumes:
+      - type: volume
+        source: war_volume
+        target: /usr/local/tomcat/webapps
