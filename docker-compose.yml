@@ -1,7 +1,7 @@
 version: '3'
 services:
   dev:
-    build: ./dev
+    build: .lesson7/dev
     volumes: 
       - type: volume
         source: war_volume
