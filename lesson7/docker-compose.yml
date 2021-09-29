@@ -3,17 +3,15 @@ volumes:
   war_volume:
 services:
   dev:
-    build: .dev
-    volumes: 
-      - type: volume
-        source: war_volume
-        target: /target/
+    build: dev/
+    volumes:
+      - war_volume:/tmp/boxfuse-sample-java-war-hello/target/
       
   prod:
-    image: tomcat:8-alpine
+    image: tomcat:9-alpine
     ports: 
       - "8082:8080"
     volumes:
-      - type: volume
-        source: war_volume
-        target: /usr/local/tomcat/webapps
+      - war_volume:/usr/local/tomcat9/webapps/
+    depends_on:
+      - dev
