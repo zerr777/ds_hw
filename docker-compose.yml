@@ -1,0 +1,14 @@
+version: '3'
+services:
+  dev:
+    build: dev
+    volumes: 
+      - ./target:/target/hello-1.0.war
+  prod:
+    image: tomcat:8-alpine
+    ports: 
+      - "8082:8080"
+    volumes:
+      - ./target:/usr/local/tomcat/webapps/
+
+
