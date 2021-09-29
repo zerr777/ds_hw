@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 volumes:
   war_volume:
 
@@ -13,6 +13,6 @@ services:
     ports: 
       - "8082:8080"
     volumes:
-      - war_volume:/usr/local/tomcat9/webapps/
+      - war_volume:/usr/local/tomcat/webapps/
     depends_on:
       - dev
