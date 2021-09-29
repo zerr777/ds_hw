@@ -1,6 +1,7 @@
-version: '3'
+version: '2'
 volumes:
   war_volume:
+
 services:
   dev:
     build: dev/
