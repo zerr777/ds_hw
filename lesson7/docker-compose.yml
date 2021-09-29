@@ -9,7 +9,7 @@ services:
       - war_volume:/tmp/boxfuse-sample-java-war-hello/target/
       
   prod:
-    image: tomcat:9-alpine
+    image: tomcat:8-alpine
     ports: 
       - "8082:8080"
     volumes:
