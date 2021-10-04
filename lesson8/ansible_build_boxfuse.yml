@@ -13,7 +13,7 @@
      name: "{{ packages }}"
      vars:
        packages:
-       - dafault-jdk
+       - default-jdk
        - maven
 
   - name: get project from git
