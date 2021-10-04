@@ -8,28 +8,35 @@
     apt:
       update_cache: yes
 
-  - name: install jdk and maven
+  - name: install maven
     apt:
-     name: "{{ packages }}"
-     vars:
-       packages:
-       - default-jdk
-       - maven
+      name: maven
+      state: present
+
+  - name: install jdk
+    apt:
+      name: default-jdk
+      state: present
+
+  - name: install git
+    apt:
+      name: git
+      state: present
 
   - name: get project from git
     git:
       repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
-      dest: /tmp
+      dest: /tmp/hw8
 
   - name: build artifact
-    command: mvn -f /tmp/boxfuse-sample-java-war-hello/pom.xml
+    command: mvn -f /tmp/hw8/pom.xml package
     become: yes
 
 - name: run webserver with builded app
   hosts: web
   become: yes
 
-  tasks: 
+  tasks:
   - name: Update apt cache
     apt:
       update_cache: yes
@@ -38,10 +45,10 @@
     apt:
       name: tomcat9
       state: present
-  
+
   - name: Copy Remote-to-Remote (from ServerA to ServerB)
-    synchronize: src=/tmp/boxfuse-sample-java-war-hello/target/ dest=var/lib/tomcat9/webapps/
-    delegate_to: build
+    synchronize: src=/tmp/hw8/target/ dest=/var/lib/tomcat9/webapps/
+    delegate_to: les8v2
 
   - name: Ensure Tomcat is running
     service:
