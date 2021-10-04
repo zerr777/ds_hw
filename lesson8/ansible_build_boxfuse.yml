@@ -1,0 +1,49 @@
+---
+- name: build artifact with maven
+  hosts: build
+  become: yes
+
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+
+  - name: install jdk and maven
+    apt:
+     name: "{{ packages }}"
+     vars:
+       packages:
+       - dafault-jdk
+       - maven
+
+  - name: get project from git
+    git:
+      repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+      dest: /tmp
+
+  - name: build artifact
+    command: mvn -f /tmp/boxfuse-sample-java-war-hello/pom.xml
+    become: yes
+
+- name: run webserver with builded app
+  hosts: web
+  become: yes
+
+  tasks: 
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+
+  - name: Ensure tomcat is present
+    apt:
+      name: tomcat9
+      state: present
+  
+  - name: Copy Remote-to-Remote (from ServerA to ServerB)
+    syncronize: src=/tmp/boxfuse-sample-java-war-hello/target/ dest=var/lib/tomcat9/webapps/
+    delegate_to: build
+
+  - name: Ensure Tomcat is running
+    service:
+      name: tomcat9
+      state: started
