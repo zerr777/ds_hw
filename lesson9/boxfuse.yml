@@ -2,8 +2,10 @@
 
 - hosts: build
   roles: 
+    - common
     - build
 
 - hosts: web
   roles: 
+    - common
     - web

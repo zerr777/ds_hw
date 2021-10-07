@@ -1,2 +1,9 @@
 ---
 # defaults file for common
+pkgs_build:
+  - git
+  - maven
+  - default-jdk
+
+pkgs_web:
+  - tomcat9

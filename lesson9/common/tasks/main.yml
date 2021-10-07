@@ -1,2 +1,17 @@
 ---
 # tasks file for common
+- name: Ensure packages install build
+  apt:
+    update_cache: yes
+    state: present
+    pkg: "{{ item }}"
+  with_items: "{{ pkgs_build }}"
+  when: "'build' in inventory_hostname"
+
+- name: Ensure packages install web
+  apt:
+    update_cache: yes
+    state: present
+    pkg: "{{ item }}"
+  with_items: "{{ pkgs_web }}"
+  when: "'web' in inventory_hostname"

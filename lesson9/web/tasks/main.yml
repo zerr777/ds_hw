@@ -1,2 +1,10 @@
 ---
 # tasks file for web
+  - name: Copy artifact from build to web
+    synchronize: src=/tmp/hw8/target/ dest=/var/lib/tomcat9/webapps/
+    delegate_to: les8v2
+
+  - name: Ensure Tomcat is running
+    service:
+      name: tomcat9
+      state: started
