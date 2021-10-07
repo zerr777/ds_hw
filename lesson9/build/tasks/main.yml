@@ -1,2 +1,10 @@
 ---
 # tasks file for build
+  - name: get project from git
+    git:
+      repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+      dest: /tmp/hw8
+
+  - name: build artifact
+    command: mvn -f /tmp/hw8/pom.xml package
+    become: yes
